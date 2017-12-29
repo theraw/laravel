@@ -1,6 +1,6 @@
 #!/bin/bash
 case "`grep DISTRIB_CODENAME /etc/*-release | awk -F '=' '{print $2}'`" in
-     xenial)
+      xenial)
               if [ "$(whoami)" != "root" ]
                  then
                   echo "You need to login as root to use this script! Sorry!";
@@ -8,5 +8,46 @@ case "`grep DISTRIB_CODENAME /etc/*-release | awk -F '=' '{print $2}'`" in
               fi 
               apt-get update && apt-get upgrade -y 
               apt-get dist-upgrade -y; apt-get autoremove -y
-     ;;
+              apt-get install build-essential bc systemd-services lshw ruby git nano curl zip unzip python -y
+              apt-get install software-properties-common -y
+              apt-get install python-software-properties -y
+              sudo add-apt-repository ppa:ondrej/php -y
+              apt-get update; apt-get upgrade -y
+              sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+              apt-get update && apt-get upgrade -y 
+              apt-get dist-upgrade -y; apt-get autoremove -y
+              clear
+              
+              # Installing PHP 7.0
+              apt-get install php7.0 -y
+              apt-get install php7.0-common php7.0-dev -y
+              apt-get install php7.0-cgi php7.0-cli php7.0-curl php7.0-gd php7.0-gmp php7.0-json php7.0-ldap php7.0-mysql -y
+              apt-get install php7.0-odbc php7.0-opcache php7.0-pgsql php7.0-pspell php7.0-readline php7.0-recode php7.0-snmp -y
+              apt-get install php7.0-sqlite3 php7.0-tidy php7.0-xml php7.0-xmlrpc libphp7.0-embed -y
+              apt-get install php-ast -y
+              apt-get install php-guzzle-stream php-guzzlehttp-psr7 -y
+              apt-get install php7.0-bcmath php7.0-bz2 php7.0-enchant php7.0-fpm php7.0-imap php7.0-interbase php7.0-intl -y
+              apt-get install php7.0-mbstring php7.0-mcrypt php7.0-phpdbg php7.0-soap php7.0-sybase php7.0-xsl php7.0-zip php7.0-dba -y
+              apt-get remove apache2 -y
+              apt-get autoremove -y
+              
+              # "Fix" PHP.
+              cd /laravel/
+              . config
+              sed -r -i "s/allow_url_fopen = Off/allow_url_fopen = $allow_url_fopen/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/;date.timezone =/date.timezone = $date_timezone/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/allow_url_include = Off/allow_url_include = $allow_url_include/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/upload_max_filesize = 5M/upload_max_filesize = $upload_max_filesize/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/;error_log = syslog/error_log = $error_log/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/memory_limit = 128M/memory_limit = $memory_limit/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/max_input_time = 60/max_input_time = $max_input_time/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/display_errors = Off/display_errors = $display_errors/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/short_open_tag = Off/short_open_tag = $short_open_tag/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/output_buffering = 4096/output_buffering = $output_buffering/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/max_execution_time = 30/max_execution_time = $max_execution_time/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/serialize_precision = 17/serialize_precision = $serialize_precision/g" /etc/php/7.0/fpm/php.ini
+              sed -r -i "s/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/error_reporting = $error_reporting/g" /etc/php/7.0/fpm/php.ini
+              
+              
+      ;;
 esac
