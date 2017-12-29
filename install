@@ -47,7 +47,8 @@ case "`grep DISTRIB_CODENAME /etc/*-release | awk -F '=' '{print $2}'`" in
               sed -r -i "s/max_execution_time = 30/max_execution_time = $max_execution_time/g" /etc/php/7.0/fpm/php.ini
               sed -r -i "s/serialize_precision = 17/serialize_precision = $serialize_precision/g" /etc/php/7.0/fpm/php.ini
               sed -r -i "s/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/error_reporting = $error_reporting/g" /etc/php/7.0/fpm/php.ini
-              
-              
+              cd /etc/php/7.0/fpm/pool.d/; rm -Rf www.conf
+              wget https://raw.githubusercontent.com/theraw/laravel/master/php/7.0/www.conf
+              cd /bin/; wget https://raw.githubusercontent.com/theraw/laravel/master/bin/fpm; chmod +x /bin/fpm
       ;;
 esac
