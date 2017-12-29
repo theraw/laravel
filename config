@@ -1,6 +1,7 @@
 # CHANGE THOSE
 # Those are suggested for personal use. IF you're thinking for clients or anything else you need more security so be careful!.
 
+# PHP 7.0
 export max_execution_time="90"
 export max_input_time="60"
 export memory_limit="2048M"
@@ -15,3 +16,7 @@ export error_log="php_error.log"
 export allow_url_fopen="On"
 export allow_url_include="On"
 export date_timezone="UTC"
+
+
+# COMPOSER
+export COMPOSER_ALLOW_SUPERUSER=1
