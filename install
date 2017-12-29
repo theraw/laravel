@@ -50,5 +50,20 @@ case "`grep DISTRIB_CODENAME /etc/*-release | awk -F '=' '{print $2}'`" in
               cd /etc/php/7.0/fpm/pool.d/; rm -Rf www.conf
               wget https://raw.githubusercontent.com/theraw/laravel/master/php/7.0/www.conf
               cd /bin/; wget https://raw.githubusercontent.com/theraw/laravel/master/bin/fpm; chmod +x /bin/fpm
+              clear
+              
+              # Install Composer
+              curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+              clear
+              
+              # Install Laravel
+              composer global require "laravel/installer"
+              ln -s /root/.composer/vendor/laravel/installer/laravel /bin/laravel
+              clear
+              
+              fpm restart
+              fpm status
+              composer -V
+              laravel -V
       ;;
 esac
