@@ -9,7 +9,8 @@ export short_open_tag="On"
 export output_buffering="Off"
 export serialize_precision="200"
 export display_errors="On"
-export error_reporting="E_ALL & ~E_DEPRECATED & ~E_NOTICE"
+export oldlog='error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT'
+export newlog='error_reporting = E_ALL & ~E_DEPRECATED & ~E_NOTICE'
 export error_log="php_error.log"
 export allow_url_fopen="On"
 export allow_url_include="On"
